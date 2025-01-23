@@ -1,0 +1,37 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: site_bank_rate
+    ports:
+      - "8502:8501"
+    env_file: .env
+    depends_on:
+      - mysql
+    volumes:
+      - .:/usr/src/app
+    networks:
+      - app
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql8
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbfile:/var/lib/mysql
+    command: '--default-authentication-plugin=mysql_native_password'
+    networks:
+      - app
+
+volumes:
+  dbfile:
+
+networks:
+  app:
+    driver: bridge
