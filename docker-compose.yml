@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: site_bank_rate
     ports:
-      - "8502:8501"
+      - "8502:8502"
     env_file: .env
     depends_on:
       - mysql
